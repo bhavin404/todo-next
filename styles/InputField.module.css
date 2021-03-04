@@ -1,0 +1,44 @@
+.container{
+    height: 100px;
+    width: 66%;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    margin-top: 100px;
+
+}
+.container form{
+    height:30px;
+    width: 88%;
+}
+.container input {
+    height: 30px;
+    width: 88%;
+    border-radius: 20px;
+    border: 2px solid rgb(80, 80, 218);
+
+}
+.container input[type=text]:focus {
+    outline: none;
+    border: 2px solid rgb(153, 153, 247);
+    color: #2d9fd9;
+}
+
+
+.container button{
+    padding:8px 15px;
+    color: rgb(240, 232, 232);
+    background: rgb(80, 80, 218);
+    outline:none;
+    border:none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 100;
+}
+
+.container button:hover{
+    color: rgb(80, 80, 218);
+    background: rgb(255, 255, 255);
+    cursor: pointer;
+    border: 1px solid black;
+}
