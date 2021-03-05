@@ -1,10 +1,13 @@
 import React from 'react'
 import InCompleteStyle from '../../styles/InComplete.module.css';
-import CompleteTask from './CompleteTask'
+import {connect} from 'react-redux'
+import { deletetodo, donetodo } from '../Redux/actions';
 
-const InComplete = ({ todoList,onDelete,onEdit }) => {
+// const InComplete = ({ todoList,onDelete,onEdit,toggleEdit,onDone }) => {
 
-   
+    const InComplete = (props) => {
+
+
 
     return (
         <>
@@ -15,43 +18,53 @@ const InComplete = ({ todoList,onDelete,onEdit }) => {
 
                 <div className={InCompleteStyle.cards}>
 
-                    {todoList.length >= 1 ? todoList.map((todos, index) => {
+                    {props.todoss.map((todos, index) => {
                         return <div key={index} className={InCompleteStyle.card}>
                             <div className={InCompleteStyle.title}>
                                 <p>Task No : {index+1}</p>
                             </div>
                             <div className={InCompleteStyle.value}>
-                                <p>{todos}</p>
+                                <p>{todos.msg}</p>
                             </div>
 
                             <div className={InCompleteStyle.btns}>
-                                <button className={InCompleteStyle.done}   >Done</button>
-                                <button className={InCompleteStyle.left} >Left</button>
-                                <button className={InCompleteStyle.edit} onClick={(e) => {
+                                <button className={InCompleteStyle.done} onClick={(e) =>{
                                     e.preventDefault()
-                                    onEdit(index)
+                                    props.dispatch(donetodo(todos.msg,todos.id))
+                                    // onDone(todos)
+                                }}   >Done</button>
+                                <button className={InCompleteStyle.left} >Left</button>
+                                <button className={InCompleteStyle.edit} id="edit" onClick={(e) => {
+                                    e.preventDefault()
+                                    onEdit(todos,index)
 
                                    
 
                                 }} >Edit</button>
                                 <button className={InCompleteStyle.delete} onClick={(e) =>{  e.preventDefault() 
-                                        onDelete(todos) 
+                                    props.dispatch(deletetodo(todos.id))
+                                    // onDelete(todos) 
                                 }}>
                                 Delete</button>
 
                             </div>
 
                         </div>
-                    }) : ' '}
+                    }) }
 
                 </div>
             </div>
 
-            <CompleteTask/>
 
 
         </>
     )
 }
 
-export default InComplete
+const mapStatetoProps = (state) =>{
+    return {
+        todoss: state.todos.data
+    }
+}
+
+export default connect(mapStatetoProps)(InComplete)
