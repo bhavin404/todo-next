@@ -1,11 +1,11 @@
 import React from 'react'
 import InCompleteStyle from '../../styles/InComplete.module.css';
-import {connect} from 'react-redux'
-import { deletetodo, donetodo } from '../Redux/actions';
+import { connect } from 'react-redux'
+import { deletetodo, donetodo, edittodo } from '../Redux/actions';
 
 // const InComplete = ({ todoList,onDelete,onEdit,toggleEdit,onDone }) => {
 
-    const InComplete = (props) => {
+const InComplete = (props) => {
 
 
 
@@ -21,36 +21,37 @@ import { deletetodo, donetodo } from '../Redux/actions';
                     {props.todoss.map((todos, index) => {
                         return <div key={index} className={InCompleteStyle.card}>
                             <div className={InCompleteStyle.title}>
-                                <p>Task No : {index+1}</p>
+                                <p>Task No : {index + 1}</p>
                             </div>
                             <div className={InCompleteStyle.value}>
                                 <p>{todos.msg}</p>
                             </div>
 
                             <div className={InCompleteStyle.btns}>
-                                <button className={InCompleteStyle.done} onClick={(e) =>{
+                                <button className={InCompleteStyle.done} onClick={(e) => {
                                     e.preventDefault()
-                                    props.dispatch(donetodo(todos.msg,todos.id))
+                                    props.dispatch(donetodo(todos.msg, todos.id))
                                     // onDone(todos)
                                 }}   >Done</button>
                                 <button className={InCompleteStyle.left} >Left</button>
+
                                 <button className={InCompleteStyle.edit} id="edit" onClick={(e) => {
                                     e.preventDefault()
-                                    onEdit(todos,index)
-
-                                   
-
+                                    props.dispatch(edittodo(todos.msg, todos.id, index))
+                                    // onEdit(todos,index)
                                 }} >Edit</button>
-                                <button className={InCompleteStyle.delete} onClick={(e) =>{  e.preventDefault() 
+
+                                <button className={InCompleteStyle.delete} onClick={(e) => {
+                                    e.preventDefault()
                                     props.dispatch(deletetodo(todos.id))
                                     // onDelete(todos) 
                                 }}>
-                                Delete</button>
+                                    Delete</button>
 
                             </div>
 
                         </div>
-                    }) }
+                    })}
 
                 </div>
             </div>
@@ -61,9 +62,10 @@ import { deletetodo, donetodo } from '../Redux/actions';
     )
 }
 
-const mapStatetoProps = (state) =>{
+const mapStatetoProps = (state) => {
     return {
-        todoss: state.todos.data
+        todoss: state.todos.data,
+        text: state.todos.text
     }
 }
 
